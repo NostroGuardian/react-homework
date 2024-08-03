@@ -1,0 +1,13 @@
+.favorite-icon {
+	margin-left: 8px;
+	width: 24px;
+	height: 24px;
+	background: #7b6ef6;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 24px;
+	letter-spacing: 2%;
+	border-radius: 50px;
+	text-align: center;
+}
