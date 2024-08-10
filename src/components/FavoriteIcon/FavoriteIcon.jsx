@@ -1,7 +1,7 @@
-import './FavoriteIcon.css';
+import styles from './FavoriteIcon.module.css';
 
 function FavoriteIcon({ count }) {
-	return <div className="favorite-icon">{count}</div>;
+	return <div className={styles['favorite-icon']}>{count}</div>;
 }
 
 export default FavoriteIcon;

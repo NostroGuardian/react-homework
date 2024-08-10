@@ -1,10 +1,14 @@
-import './NavigationLink.css';
+import styles from './NavigationLink.module.css';
+import cn from 'classnames';
 
 function NavigationLink({ href, text, isActive, icon }) {
-	const activeStyle =
-		'navigation__link' + (isActive === true ? ' ' + 'navigation__link_active' : '');
 	return (
-		<a href={href} className={activeStyle}>
+		<a
+			href={href}
+			className={cn(styles['navigation__link'], {
+				[styles['navigation__link_active']]: isActive,
+			})}
+		>
 			{text}
 			{icon ? icon : ''}
 		</a>

@@ -1,8 +1,16 @@
-import './Input.css';
+import styles from './Input.module.css';
+import cn from 'classnames';
 
 function Input({ placeholder, isSearch }) {
-	const cl = 'input' + (isSearch === true ? ' ' + 'input-search' : '');
-	return <input type="text" className={cl} placeholder={placeholder} />;
+	return (
+		<input
+			type="text"
+			className={cn(styles['input'], {
+				[styles['input-search']]: isSearch,
+			})}
+			placeholder={placeholder}
+		/>
+	);
 }
 
 export default Input;

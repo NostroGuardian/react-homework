@@ -1,6 +1,6 @@
 .header {
 	height: 80px;
-	background: rgba(18, 24, 41, 0.8);
+	background: #121829cc;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
