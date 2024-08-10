@@ -1,0 +1,16 @@
+.navigation__link {
+	text-decoration: none;
+	font-size: 16px;
+	font-weight: 600;
+	letter-spacing: 0.3px;
+	color: #a8aebf;
+	display: flex;
+}
+
+.navigation__link:hover {
+	color: #c0c3ff;
+}
+
+.navigation__link_active {
+	color: #fff;
+}

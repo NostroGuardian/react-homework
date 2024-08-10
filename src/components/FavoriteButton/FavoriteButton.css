@@ -1,0 +1,29 @@
+.films-list__toFavorite {
+	color: #7b6ef6;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 16px;
+	margin-left: 8px;
+	letter-spacing: 0.3px;
+	border: none;
+	background: none;
+	padding: 0;
+	cursor: pointer;
+}
+
+.films-list__inFavorite {
+	color: rgb(55, 216, 167);
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 16px;
+	margin-left: 8px;
+	letter-spacing: 0.3px;
+	border: none;
+	background: none;
+	padding: 0;
+	cursor: pointer;
+}
