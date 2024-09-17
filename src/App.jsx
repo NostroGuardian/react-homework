@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './App.css';
 import Button from './components/Button/Button';
 import FavoriteIcon from './components/FavoriteIcon/FavoriteIcon';
@@ -13,6 +13,7 @@ import FilmsList from './layout/FilmsList/FilmsList';
 import Header from './layout/Header/Header';
 import LoginForm from './components/LoginForm/LoginForm';
 import UserIcon from './components/UserIcon/UserIcon';
+import { UserContext } from './context/user.context';
 
 const FILMS_DATA = [
 	{
@@ -70,6 +71,7 @@ function App() {
 	const searchButtonRef = useRef();
 
 	const [userLoggined, setUserLoggined] = useState(false);
+	const { user, setUser } = useContext(UserContext);
 
 	const getExistingData = () => {
 		const existingData = localStorage.getItem('data');
@@ -82,8 +84,9 @@ function App() {
 
 		if (loginnedUser) {
 			setUserLoggined(loginnedUser);
+			setUser(loginnedUser.name);
 		}
-	}, []);
+	}, [setUser, user]);
 
 	const logOut = () => {
 		const logOutUser = { ...userLoggined, isLoggined: false };
@@ -95,6 +98,7 @@ function App() {
 
 		localStorage.setItem('data', JSON.stringify(updatedUsers));
 		setUserLoggined(false);
+		setUser(null);
 	};
 
 	return (
@@ -110,11 +114,7 @@ function App() {
 					/>
 					{userLoggined ? (
 						<>
-							<NavigationLink
-								href="#"
-								text={userLoggined.name}
-								icon={<UserIcon />}
-							/>
+							<NavigationLink href="#" text={user} icon={<UserIcon />} />
 							<NavigationLink href="#" text="Выйти" onClick={logOut} />
 						</>
 					) : (

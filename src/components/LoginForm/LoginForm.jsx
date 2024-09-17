@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './LoginForm.module.css';
+import { UserContext } from '../../context/user.context';
 
 function LoginForm({ setUserLoggined }) {
 	const [name, setName] = useState();
+	const { setUser } = useContext(UserContext);
 
 	const getExistingData = () => {
 		const existingData = localStorage.getItem('data');
@@ -18,6 +20,8 @@ function LoginForm({ setUserLoggined }) {
 			isLoggined: true,
 		};
 
+		console.log(name);
+
 		const existingUsers = getExistingData();
 		const userExist = existingUsers.find((user) => user.name === name);
 
@@ -28,10 +32,14 @@ function LoginForm({ setUserLoggined }) {
 			);
 			localStorage.setItem('data', JSON.stringify(updatedUsers));
 			setUserLoggined(updatedUser);
+			console.log(name);
+			setUser(name);
 		} else {
 			existingUsers.push(data);
 			localStorage.setItem('data', JSON.stringify(existingUsers));
 			setUserLoggined(existingUsers.find((user) => user.name === name));
+			console.log(name);
+			setUser(name);
 		}
 	};
 
