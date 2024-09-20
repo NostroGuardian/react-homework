@@ -1,5 +1,5 @@
 .films-list__card {
-	background: rgba(32, 40, 62, 0.8);
+	background: #20283ecc;
 	backdrop-filter: blur(80px);
 	border-radius: 12px;
 	font-size: 16px;
@@ -18,7 +18,7 @@
 .films-list__rating {
 	color: #ffbd6d;
 	padding: 4px 8px;
-	background: rgba(0, 0, 0, 0.65);
+	background: #000000a6;
 	border-radius: 8px;
 	backdrop-filter: blur(8px);
 	display: flex;

@@ -14,7 +14,7 @@
 }
 
 .films-list__inFavorite {
-	color: rgb(55, 216, 167);
+	color: #37d8a7;
 	font-weight: 600;
 	display: flex;
 	align-items: center;

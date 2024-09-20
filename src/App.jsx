@@ -1,3 +1,4 @@
+import { useContext, useEffect, useRef, useState } from 'react';
 import './App.css';
 import Button from './components/Button/Button';
 import FavoriteIcon from './components/FavoriteIcon/FavoriteIcon';
@@ -10,6 +11,9 @@ import PageTitle from './components/PageTitle/PageTitle';
 import Paragraph from './components/Paragraph/Paragraph';
 import FilmsList from './layout/FilmsList/FilmsList';
 import Header from './layout/Header/Header';
+import LoginForm from './components/LoginForm/LoginForm';
+import UserIcon from './components/UserIcon/UserIcon';
+import { UserContext } from './context/user.context';
 
 const FILMS_DATA = [
 	{
@@ -63,6 +67,40 @@ const FILMS_DATA = [
 ];
 
 function App() {
+	const searchInputRef = useRef();
+	const searchButtonRef = useRef();
+
+	const [userLoggined, setUserLoggined] = useState(false);
+	const { user, setUser } = useContext(UserContext);
+
+	const getExistingData = () => {
+		const existingData = localStorage.getItem('data');
+		return existingData ? JSON.parse(existingData) : [];
+	};
+
+	useEffect(() => {
+		const allUsers = getExistingData();
+		const loginnedUser = allUsers.find((user) => user.isLoggined === true);
+
+		if (loginnedUser) {
+			setUserLoggined(loginnedUser);
+			setUser(loginnedUser.name);
+		}
+	}, [setUser, user]);
+
+	const logOut = () => {
+		const logOutUser = { ...userLoggined, isLoggined: false };
+
+		const allUsers = getExistingData();
+		const updatedUsers = allUsers.map((user) =>
+			user.name === userLoggined.name ? logOutUser : user
+		);
+
+		localStorage.setItem('data', JSON.stringify(updatedUsers));
+		setUserLoggined(false);
+		setUser(null);
+	};
+
 	return (
 		<>
 			<Header>
@@ -74,7 +112,14 @@ function App() {
 						text="Мои фильмы"
 						icon={<FavoriteIcon count={2} />}
 					/>
-					<NavigationLink href="#" text="Войти" icon={<LoginIcon />} />
+					{userLoggined ? (
+						<>
+							<NavigationLink href="#" text={user} icon={<UserIcon />} />
+							<NavigationLink href="#" text="Выйти" onClick={logOut} />
+						</>
+					) : (
+						<NavigationLink href="#" text="Войти" icon={<LoginIcon />} />
+					)}
 				</Navigation>
 			</Header>
 			<PageTitle text="Поиск" />
@@ -83,9 +128,16 @@ function App() {
 			добавления в избранное."
 				fonstSize="16px"
 			/>
-			<Input placeholder="Введите название" isSearch={true} />
-			<Button text="Искать" onClick={() => console.log('clicked')} />
+			<Input placeholder="Введите название" isSearch={true} ref={searchInputRef} />
+			<Button
+				text="Искать"
+				onClick={() => console.log('clicked')}
+				ref={searchButtonRef}
+			/>
 			<FilmsList items={FILMS_DATA} />
+
+			<PageTitle text="Вход" />
+			<LoginForm setUserLoggined={setUserLoggined} />
 		</>
 	);
 }

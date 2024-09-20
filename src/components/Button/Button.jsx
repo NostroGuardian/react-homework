@@ -1,11 +1,13 @@
-import './Button.css';
+import { forwardRef } from 'react';
+import styles from './Button.module.css';
+import cn from 'classnames';
 
-function Button({ text, onClick }) {
+const Button = forwardRef(function Button({ text, onClick }, ref) {
 	return (
-		<button className="button accent" onClick={onClick}>
+		<button ref={ref} className={cn(styles['button'], styles['accent'])} onClick={onClick}>
 			{text}
 		</button>
 	);
-}
+});
 
 export default Button;

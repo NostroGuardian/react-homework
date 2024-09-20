@@ -1,8 +1,19 @@
-import './Input.css';
+import { forwardRef } from 'react';
+import styles from './Input.module.css';
+import cn from 'classnames';
 
-function Input({ placeholder, isSearch }) {
-	const cl = 'input' + (isSearch === true ? ' ' + 'input-search' : '');
-	return <input type="text" className={cl} placeholder={placeholder} />;
-}
+const Input = forwardRef(function Input({ placeholder, isSearch, ...others }, ref) {
+	return (
+		<input
+			ref={ref}
+			type="text"
+			className={cn(styles['input'], {
+				[styles['input-search']]: isSearch,
+			})}
+			placeholder={placeholder}
+			{...others}
+		/>
+	);
+});
 
 export default Input;

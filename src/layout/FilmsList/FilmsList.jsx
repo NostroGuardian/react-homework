@@ -1,9 +1,9 @@
-import './FilmsList.css';
+import styles from './FilmsList.module.css';
 import FilmCard from '../../components/FilmCard/FilmCard';
 
 function FilmsList({ items }) {
 	return (
-		<div className="films-list">
+		<div className={styles['films-list']}>
 			{items.map((film) => (
 				<FilmCard
 					key={film.id}

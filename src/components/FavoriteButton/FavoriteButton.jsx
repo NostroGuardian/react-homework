@@ -1,17 +1,16 @@
-import './FavoriteButton.css';
+import styles from './FavoriteButton.module.css';
 
 function FavoriteButton({ isFavorite }) {
 	if (isFavorite) {
 		return (
-			<button className="films-list__inFavorite">
-				<img src="/public/inFavorite-icon.svg" alt="Remove from favorite" />В
-				избранном
+			<button className={styles['films-list__inFavorite']}>
+				<img src="/public/inFavorite-icon.svg" alt="Remove from favorite" />В избранном
 			</button>
 		);
 	}
 
 	return (
-		<button className="films-list__toFavorite">
+		<button className={styles['films-list__toFavorite']}>
 			<img src="/public/toFavorite-icon.svg" alt="Add to favorite" />В избранное
 		</button>
 	);
