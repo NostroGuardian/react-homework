@@ -1,7 +1,8 @@
 import FavoriteButton from '../FavoriteButton/FavoriteButton';
 import styles from './FilmCard.module.css';
+import { FilmCardProps } from './FilmCard.props';
 
-function FilmCard({ title, poster, rating, isFavorite }) {
+function FilmCard({ title, poster, rating, isFavorite }: FilmCardProps) {
 	return (
 		<div className={styles['films-list__card']}>
 			<img className={styles['films-list__image']} src={poster} alt={title} />

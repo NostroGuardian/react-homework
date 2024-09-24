@@ -1,7 +1,8 @@
 import styles from './FilmsList.module.css';
 import FilmCard from '../../components/FilmCard/FilmCard';
+import { FilmsListProps } from './FilmsList.props';
 
-function FilmsList({ items }) {
+function FilmsList({ items }: FilmsListProps) {
 	return (
 		<div className={styles['films-list']}>
 			{items.map((film) => (

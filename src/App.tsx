@@ -14,6 +14,8 @@ import Header from './layout/Header/Header';
 import LoginForm from './components/LoginForm/LoginForm';
 import UserIcon from './components/UserIcon/UserIcon';
 import { UserContext } from './context/user.context';
+import { UserProps } from './components/LoginForm/LoginForm.props';
+import { UserContextProps } from './context/user.context.props';
 
 const FILMS_DATA = [
 	{
@@ -67,11 +69,17 @@ const FILMS_DATA = [
 ];
 
 function App() {
-	const searchInputRef = useRef();
-	const searchButtonRef = useRef();
+	const searchInputRef = useRef<HTMLInputElement | null>(null);
+	const searchButtonRef = useRef<HTMLButtonElement | null>(null);
 
-	const [userLoggined, setUserLoggined] = useState(false);
-	const { user, setUser } = useContext(UserContext);
+	const [userLoggined, setUserLoggined] = useState<UserProps | boolean>(false);
+	const context = useContext<UserContextProps | undefined>(UserContext);
+
+	if (!context) {
+		throw new Error('Context is undefined');
+	}
+
+	const { user, setUser } = context;
 
 	const getExistingData = () => {
 		const existingData = localStorage.getItem('data');
@@ -80,7 +88,7 @@ function App() {
 
 	useEffect(() => {
 		const allUsers = getExistingData();
-		const loginnedUser = allUsers.find((user) => user.isLoggined === true);
+		const loginnedUser = allUsers.find((user: UserProps) => user.isLoggined === true);
 
 		if (loginnedUser) {
 			setUserLoggined(loginnedUser);
@@ -89,14 +97,14 @@ function App() {
 	}, [setUser, user]);
 
 	const logOut = () => {
-		const logOutUser = { ...userLoggined, isLoggined: false };
-
-		const allUsers = getExistingData();
-		const updatedUsers = allUsers.map((user) =>
-			user.name === userLoggined.name ? logOutUser : user
-		);
-
-		localStorage.setItem('data', JSON.stringify(updatedUsers));
+		if (typeof userLoggined === 'object') {
+			const logOutUser = { ...userLoggined, isLoggined: false };
+			const allUsers = getExistingData();
+			const updatedUsers = allUsers.map((user: UserProps) =>
+				user.name === userLoggined.name ? logOutUser : user
+			);
+			localStorage.setItem('data', JSON.stringify(updatedUsers));
+		}
 		setUserLoggined(false);
 		setUser(null);
 	};

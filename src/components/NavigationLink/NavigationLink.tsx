@@ -1,7 +1,8 @@
 import styles from './NavigationLink.module.css';
 import cn from 'classnames';
+import { NavigationLinkProps } from './NavigationLink.props';
 
-function NavigationLink({ href, text, isActive, icon, ...others }) {
+function NavigationLink({ href, text, isActive, icon, ...others }: NavigationLinkProps) {
 	return (
 		<a
 			href={href}

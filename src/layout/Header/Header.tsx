@@ -1,6 +1,7 @@
 import styles from './Header.module.css';
+import { HeaderProps } from './Header.props';
 
-function Header({ children }) {
+function Header({ children }: HeaderProps) {
 	return <header className={styles['header']}>{children}</header>;
 }
 

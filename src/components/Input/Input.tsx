@@ -1,8 +1,12 @@
 import { forwardRef } from 'react';
 import styles from './Input.module.css';
 import cn from 'classnames';
+import { InputProps } from './Input.props';
 
-const Input = forwardRef(function Input({ placeholder, isSearch, ...others }, ref) {
+const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
+	{ placeholder, isSearch = false, ...others },
+	ref
+) {
 	return (
 		<input
 			ref={ref}

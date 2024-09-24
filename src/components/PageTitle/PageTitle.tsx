@@ -1,6 +1,7 @@
 import styles from './PageTitle.module.css';
+import { PageTitleProps } from './PageTitle.props';
 
-function PageTitle({ text }) {
+function PageTitle({ text }: PageTitleProps) {
 	return <h1 className={styles['page-title']}>{text}</h1>;
 }
 

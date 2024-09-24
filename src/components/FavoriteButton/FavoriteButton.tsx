@@ -1,6 +1,7 @@
 import styles from './FavoriteButton.module.css';
+import { FavoriteButtonProps } from './FavoriteButton.props';
 
-function FavoriteButton({ isFavorite }) {
+function FavoriteButton({ isFavorite }: FavoriteButtonProps) {
 	if (isFavorite) {
 		return (
 			<button className={styles['films-list__inFavorite']}>
