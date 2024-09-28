@@ -1,0 +1,28 @@
+.wrapper {
+	display: flex;
+	gap: 80px;
+	margin-top: 80px;
+	margin-bottom: 35px;
+}
+
+.film-info {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.buttons {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+}
+
+.additional-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.favorite-button {
+	margin: 0;
+}

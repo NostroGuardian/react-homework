@@ -1,9 +1,17 @@
 .films-list {
 	display: grid;
 	grid-template-columns: repeat(4, 300px);
-	column-gap: 24px;
-	row-gap: 16px;
+	column-gap: 40px;
+	row-gap: 30px;
 	justify-items: center;
-	justify-content: center;
+	/* justify-content: center; */
 	margin: 80px 0;
+}
+
+@media screen and (width < 1500px) {
+	.films-list {
+		justify-content: center;
+		column-gap: 24px;
+		row-gap: 16px;
+	}
 }
