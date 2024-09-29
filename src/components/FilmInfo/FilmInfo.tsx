@@ -3,28 +3,31 @@ import FavoriteButton from '../FavoriteButton/FavoriteButton';
 import Paragraph from '../Paragraph/Paragraph';
 import Rating from '../Rating/Rating';
 import styles from './FilmInfo.module.css';
+import { FilmInfoProps } from './FilmInfo.props';
 
-function FilmInfo() {
+function FilmInfo({
+	image,
+	description,
+	rating,
+	type,
+	datePublished,
+	duration,
+	genre,
+}: FilmInfoProps) {
 	return (
 		<div className={styles['wrapper']}>
-			<img src="/filmsImg/avengers.png" alt="Film image" />
+			<img src={image} className={styles['image']} alt="Film image" />
 			<div className={styles['film-info']}>
-				<Paragraph
-					text="After the devastating events of Avengers: Infinity War, the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos actions and restore order to the universe once and for all, no matter what consequences may be in store."
-					fonstSize="20px"
-				/>
+				<Paragraph text={description} fonstSize="20px" />
 				<div className={styles['buttons']}>
-					<Rating count={8.3} />
+					<Rating count={rating} />
 					<FavoriteButton isFavorite={false} className={styles['favorite-button']} />
 				</div>
 				<div className={styles['additional-wrapper']}>
-					<AdditionalFilmInfo title="Тип" text="Movie" />
-					<AdditionalFilmInfo title="Дата выхода" text="2019-04-24" />
-					<AdditionalFilmInfo title="Длительность" text="181 мин" />
-					<AdditionalFilmInfo
-						title="Жанр"
-						text="Adventure, Science Fiction, Action"
-					/>
+					<AdditionalFilmInfo title="Тип" text={type} />
+					<AdditionalFilmInfo title="Дата выхода" text={datePublished} />
+					<AdditionalFilmInfo title="Длительность" text={`${duration} мин`} />
+					<AdditionalFilmInfo title="Жанр" text={genre.join(', ')} />
 				</div>
 			</div>
 		</div>
