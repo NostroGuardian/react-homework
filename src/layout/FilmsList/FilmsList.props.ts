@@ -1,12 +1,6 @@
 import { HTMLAttributes } from 'react';
-
-interface IItem {
-	id: number;
-	title: string;
-	poster: string;
-	rating: number;
-}
+import { ISearchFilm } from '../../interfaces/allFilms.interface';
 
 export interface FilmsListProps extends HTMLAttributes<HTMLDivElement> {
-	items: IItem[];
+	items: ISearchFilm[];
 }

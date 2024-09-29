@@ -26,3 +26,8 @@
 .favorite-button {
 	margin: 0;
 }
+
+.image {
+	height: 700px;
+	border-radius: 24px;
+}
