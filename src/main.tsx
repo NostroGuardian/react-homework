@@ -11,11 +11,19 @@ import Search from './pages/Search/Search';
 import Film from './pages/Film/Film';
 import axios from 'axios';
 import { PREFIX } from './helpers/API';
+import { RequireAuth } from './helpers/RequireAuth';
+import AuthLayout from './layout/AuthLayout/AuthLayout';
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <MainLayout />,
+		element: (
+			<UserContextProvider>
+				<RequireAuth>
+					<MainLayout />
+				</RequireAuth>
+			</UserContextProvider>
+		),
 		children: [
 			{
 				path: '/',
@@ -24,10 +32,6 @@ const router = createBrowserRouter([
 			{
 				path: '/favorites',
 				element: <Favorites />,
-			},
-			{
-				path: '/login',
-				element: <Login />,
 			},
 			{
 				path: '/film/:id',
@@ -45,6 +49,15 @@ const router = createBrowserRouter([
 		],
 	},
 	{
+		path: '/login',
+		element: (
+			<UserContextProvider>
+				<AuthLayout />
+			</UserContextProvider>
+		),
+		children: [{ path: '/login', element: <Login /> }],
+	},
+	{
 		path: '*',
 		element: <Error />,
 	},
@@ -55,9 +68,7 @@ const rootElement: HTMLElement | null = document.getElementById('root');
 if (rootElement) {
 	ReactDOM.createRoot(rootElement).render(
 		<React.StrictMode>
-			<UserContextProvider>
-				<RouterProvider router={router} />
-			</UserContextProvider>
+			<RouterProvider router={router} />
 		</React.StrictMode>
 	);
 }
