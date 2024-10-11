@@ -1,65 +1,40 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import PageTitle from '../../components/PageTitle/PageTitle';
 import Paragraph from '../../components/Paragraph/Paragraph';
 import FilmsList from '../../layout/FilmsList/FilmsList';
 import styles from './Search.module.css';
+import axios from 'axios';
+import { PREFIX } from '../../helpers/API';
+import { ISearchFilm } from '../../interfaces/allFilms.interface';
+import NothingWasFound from '../../components/NothingWasFound/NothingWasFound';
 
 function Search() {
-	const FILMS_DATA = [
-		{
-			id: 1,
-			title: 'Black Widow',
-			poster: '/public/filmsImg/Shang-Chi-and-the-Legend-of-the-Ten-Rings-Releases-New 1.png',
-			rating: 324,
-		},
-		{
-			id: 2,
-			title: 'Shang Chi',
-			poster: '/public/filmsImg/Shang-Chi-and-the-Legend-of-the-Ten-Rings-Releases-New 1-2.png',
-			rating: 124,
-		},
-		{
-			id: 3,
-			title: 'Loki',
-			poster: '/public/filmsImg/Shang-Chi-and-the-Legend-of-the-Ten-Rings-Releases-New 1-3.png',
-			rating: 235,
-		},
-		{
-			id: 4,
-			title: 'How I Met Your Mother',
-			poster: '/public/filmsImg/Shang-Chi-and-the-Legend-of-the-Ten-Rings-Releases-New 1-4.png',
-			rating: 123,
-		},
-		{
-			id: 5,
-			title: 'Money Heist',
-			poster: '/public/filmsImg/Shang-Chi-and-the-Legend-of-the-Ten-Rings-Releases-New 1-5.png',
-			rating: 8125,
-		},
-		{
-			id: 6,
-			title: 'Friends',
-			poster: '/public/filmsImg/Shang-Chi-and-the-Legend-of-the-Ten-Rings-Releases-New 1-6.png',
-			rating: 123,
-		},
-		{
-			id: 7,
-			title: 'The Big Bang Theory',
-			poster: '/public/filmsImg/Shang-Chi-and-the-Legend-of-the-Ten-Rings-Releases-New 1-7.png',
-			rating: 12,
-		},
-		{
-			id: 8,
-			title: 'Two And a Half Men',
-			poster: '/public/filmsImg/Shang-Chi-and-the-Legend-of-the-Ten-Rings-Releases-New 1-8.png',
-			rating: 456,
-		},
-	];
-
 	const searchInputRef = useRef<HTMLInputElement | null>(null);
 	const searchButtonRef = useRef<HTMLButtonElement | null>(null);
+
+	const [filmsData, setFilmsData] = useState<ISearchFilm[]>([]);
+	const [searchQuery, setSearchQuery] = useState<string | undefined>();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [nothingWasFound, setNothingWasFound] = useState<boolean>(false);
+
+	const findFilm = async (query: string) => {
+		try {
+			setIsLoading(true);
+			const { data } = await axios.get(`${PREFIX}/?q=${query}`);
+			console.log(data.description);
+			setFilmsData(data.description);
+			if (data.description.length === 0) {
+				setNothingWasFound(true);
+			}
+			setIsLoading(false);
+		} catch (e) {
+			console.error(e);
+			setIsLoading(false);
+			return;
+		}
+	};
 
 	return (
 		<>
@@ -70,15 +45,26 @@ function Search() {
 				fonstSize="16px"
 			/>
 			<div className={styles['search']}>
-				<Input placeholder="Введите название" isSearch={true} ref={searchInputRef} />
+				<Input
+					placeholder="Введите название"
+					isSearch={true}
+					ref={searchInputRef}
+					onChange={(e) => setSearchQuery(e.target.value)}
+				/>
 				<Button
 					text="Искать"
-					onClick={() => console.log('clicked')}
+					onClick={() => {
+						if (searchQuery) {
+							findFilm(searchQuery);
+						}
+					}}
 					ref={searchButtonRef}
 				/>
 			</div>
 
-			<FilmsList items={FILMS_DATA} />
+			{isLoading && <>Поиск по запросу...</>}
+			{!isLoading && <FilmsList items={filmsData} />}
+			{nothingWasFound && !isLoading && <NothingWasFound />}
 		</>
 	);
 }

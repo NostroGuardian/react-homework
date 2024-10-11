@@ -36,13 +36,11 @@ function LoginForm({ setUserLoggined }: LoginFormProps) {
 				user.name === name ? updatedUser : user
 			);
 			localStorage.setItem('data', JSON.stringify(updatedUsers));
-			setUserLoggined(updatedUser);
 			setUser(updatedUser.name);
 		} else {
 			existingUsers.push(data);
 			localStorage.setItem('data', JSON.stringify(existingUsers));
 			const newUser = existingUsers.find((user: UserProps) => user.name === name);
-			setUserLoggined(newUser);
 			setUser(newUser.name);
 		}
 	};
