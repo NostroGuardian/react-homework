@@ -4,7 +4,7 @@ import { FilmsListProps } from './FilmsList.props';
 import { Link } from 'react-router-dom';
 
 function FilmsList({ items }: FilmsListProps) {
-	if (!Array.isArray(items)) {
+	if (!Array.isArray(items) || items.length === 0) {
 		return <div>No films available</div>;
 	}
 
