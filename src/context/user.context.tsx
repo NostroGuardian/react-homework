@@ -32,8 +32,6 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
 		const allUsers = getExistingData();
 		const loginnedUser = allUsers.find((user: UserProps) => user.isLoggined === true);
 
-		console.log(loginnedUser);
-
 		if (loginnedUser) {
 			setUserLoggined(loginnedUser);
 			setUser(loginnedUser.name);

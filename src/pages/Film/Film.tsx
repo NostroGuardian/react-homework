@@ -5,18 +5,10 @@ import FilmFeedback from '../../components/FilmFeedback/FilmFeedback';
 import FilmInfo from '../../components/FilmInfo/FilmInfo';
 import { IFilm } from '../../interfaces/film.interface';
 import { Suspense } from 'react';
+import { parseDuration } from '../../helpers/durationParser';
 
 function Film() {
 	const data = useLoaderData() as { data: IFilm };
-
-	function parseDuration(duration: string): number {
-		const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
-		const matches = duration.match(regex);
-		const hours = matches?.[1] ? parseInt(matches[1], 10) : 0;
-		const minutes = matches?.[2] ? parseInt(matches[2], 10) : 0;
-		const seconds = matches?.[3] ? parseInt(matches[3], 10) : 0;
-		return hours * 60 + minutes + seconds / 60;
-	}
 
 	return (
 		<>
@@ -27,6 +19,8 @@ function Film() {
 							<div className={styles['content']}>
 								<FilmHeader>{data.short.name}</FilmHeader>
 								<FilmInfo
+									userName={undefined}
+									title={data.short.name}
 									image={data.short.image}
 									description={data.short.description}
 									rating={data.short.aggregateRating.ratingValue}
@@ -34,6 +28,7 @@ function Film() {
 									datePublished={data.short.datePublished}
 									duration={parseDuration(data.short.duration)}
 									genre={data.short.genre}
+									imdbId={data.imdbId}
 								/>
 								<FilmFeedback
 									title={data.short.review.name}

@@ -12,9 +12,12 @@ import { UserContext } from '../../context/user.context';
 import { Outlet } from 'react-router-dom';
 import styles from './MainLayout.module.css';
 import Username from '../../components/Username/Username';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 function MainLayout() {
 	const context = useContext<UserContextProps | undefined>(UserContext);
+	const favoritesFilms = useSelector((s: RootState) => s.favorites.items);
 
 	if (!context) {
 		throw new Error('Context is undefined');
@@ -22,6 +25,7 @@ function MainLayout() {
 
 	const { user, logOut } = context;
 
+	const currentUserFilmsCount = favoritesFilms.filter((f) => f.userName === user).length;
 	return (
 		<>
 			<Header>
@@ -31,7 +35,7 @@ function MainLayout() {
 					<NavigationLink
 						to="/favorites"
 						text="Мои фильмы"
-						icon={<FavoriteIcon count={2} />}
+						icon={<FavoriteIcon count={currentUserFilmsCount} />}
 					/>
 					{user ? (
 						<>
