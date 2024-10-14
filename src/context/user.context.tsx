@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { UserContextProps, UserContextProviderProps } from './user.context.props';
-import { UserProps } from '../components/LoginForm/LoginForm.props';
 import { useNavigate } from 'react-router-dom';
+import { UserProps } from '../interfaces/userProps.interface';
 
 export const UserContext = createContext<UserContextProps | undefined>(undefined);
 

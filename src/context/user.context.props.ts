@@ -1,5 +1,5 @@
 import { MouseEventHandler, ReactNode } from 'react';
-import { UserProps } from '../components/LoginForm/LoginForm.props';
+import { UserProps } from '../interfaces/userProps.interface';
 
 export interface UserContextProps {
 	user: UserProps | undefined;

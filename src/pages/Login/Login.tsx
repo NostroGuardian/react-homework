@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import PageTitle from '../../components/PageTitle/PageTitle';
-import { UserProps } from '../../components/LoginForm/LoginForm.props';
 import styles from './Login.module.css';
+import { UserProps } from '../../interfaces/userProps.interface';
 
 function Login() {
 	const [userLoggined, setUserLoggined] = useState<UserProps | boolean>(false);

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import FavoriteIcon from '../../components/FavoriteIcon/FavoriteIcon';
 import LoginIcon from '../../components/LoginIcon/LoginIcon';
 import Logo from '../../components/Logo/Logo';
@@ -6,7 +6,6 @@ import Navigation from '../../components/Navigation/Navigation';
 import NavigationLink from '../../components/NavigationLink/NavigationLink';
 import UserIcon from '../../components/UserIcon/UserIcon';
 import Header from '../Header/Header';
-import { UserProps } from '../../components/LoginForm/LoginForm.props';
 import { UserContextProps } from '../../context/user.context.props';
 import { UserContext } from '../../context/user.context';
 import { Outlet } from 'react-router-dom';

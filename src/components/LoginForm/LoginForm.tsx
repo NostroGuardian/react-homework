@@ -3,7 +3,8 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './LoginForm.module.css';
 import { UserContext } from '../../context/user.context';
-import { LoginFormProps, UserProps } from './LoginForm.props';
+import { LoginFormProps } from './LoginForm.props';
+import { UserProps } from '../../interfaces/userProps.interface';
 
 function LoginForm({ setUserLoggined }: LoginFormProps) {
 	const [name, setName] = useState<string>();
