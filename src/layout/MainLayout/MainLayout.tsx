@@ -1,4 +1,3 @@
-import { useContext, useEffect, useState } from 'react';
 import FavoriteIcon from '../../components/FavoriteIcon/FavoriteIcon';
 import LoginIcon from '../../components/LoginIcon/LoginIcon';
 import Logo from '../../components/Logo/Logo';
@@ -6,22 +5,21 @@ import Navigation from '../../components/Navigation/Navigation';
 import NavigationLink from '../../components/NavigationLink/NavigationLink';
 import UserIcon from '../../components/UserIcon/UserIcon';
 import Header from '../Header/Header';
-import { UserProps } from '../../components/LoginForm/LoginForm.props';
-import { UserContextProps } from '../../context/user.context.props';
-import { UserContext } from '../../context/user.context';
 import { Outlet } from 'react-router-dom';
 import styles from './MainLayout.module.css';
 import Username from '../../components/Username/Username';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { usersActions } from '../../store/user.slice';
 
 function MainLayout() {
-	const context = useContext<UserContextProps | undefined>(UserContext);
+	const favoritesFilms = useSelector((s: RootState) => s.favorites.items);
+	const currentUser = useSelector((s: RootState) => s.users.currentUser);
+	const dispatch = useDispatch<AppDispatch>();
 
-	if (!context) {
-		throw new Error('Context is undefined');
-	}
-
-	const { user, logOut } = context;
-
+	const currentUserFilmsCount = favoritesFilms.filter(
+		(f) => f.userName === currentUser?.name
+	).length;
 	return (
 		<>
 			<Header>
@@ -31,12 +29,16 @@ function MainLayout() {
 					<NavigationLink
 						to="/favorites"
 						text="Мои фильмы"
-						icon={<FavoriteIcon count={2} />}
+						icon={<FavoriteIcon count={currentUserFilmsCount} />}
 					/>
-					{user ? (
+					{currentUser ? (
 						<>
-							<Username text={user} icon={<UserIcon />} />
-							<NavigationLink to="/login" text="Выйти" onClick={logOut} />
+							<Username text={currentUser.name} icon={<UserIcon />} />
+							<NavigationLink
+								to="/login"
+								text="Выйти"
+								onClick={() => dispatch(usersActions.logOut(currentUser))}
+							/>
 						</>
 					) : (
 						<NavigationLink to="/login" text="Войти" icon={<LoginIcon />} />

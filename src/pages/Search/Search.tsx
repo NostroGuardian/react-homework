@@ -23,7 +23,6 @@ function Search() {
 		try {
 			setIsLoading(true);
 			const { data } = await axios.get(`${PREFIX}/?q=${query}`);
-			console.log(data.description);
 			setFilmsData(data.description);
 			if (data.description.length === 0) {
 				setNothingWasFound(true);
@@ -35,6 +34,10 @@ function Search() {
 			return;
 		}
 	};
+
+	useEffect(() => {
+		findFilm('A');
+	}, []);
 
 	return (
 		<>
@@ -62,7 +65,7 @@ function Search() {
 				/>
 			</div>
 
-			{isLoading && <>Поиск по запросу...</>}
+			{isLoading && <>Поиск...</>}
 			{!isLoading && <FilmsList items={filmsData} />}
 			{nothingWasFound && !isLoading && <NothingWasFound />}
 		</>

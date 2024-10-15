@@ -1,18 +1,12 @@
-import { ReactNode, useContext } from 'react';
+import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { UserContext } from '../context/user.context';
-import { UserContextProps } from '../context/user.context.props';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 export const RequireAuth = ({ children }: { children: ReactNode }) => {
-	const context = useContext<UserContextProps | undefined>(UserContext);
+	const currentUser = useSelector((s: RootState) => s.users.currentUser);
 
-	if (!context) {
-		throw new Error('Context unavalible!');
-	}
-
-	const { user } = context;
-
-	if (user === undefined) {
+	if (currentUser === undefined) {
 		return <Navigate to={'/login'} replace />;
 	}
 	return children;

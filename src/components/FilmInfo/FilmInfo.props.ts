@@ -1,4 +1,8 @@
+import { UserProps } from '../LoginForm/LoginForm.props';
+
 export interface FilmInfoProps {
+	userName: UserProps | undefined;
+	title: string;
 	image: string;
 	description: string;
 	rating: number;
@@ -6,4 +10,6 @@ export interface FilmInfoProps {
 	datePublished: string;
 	duration: number;
 	genre: string[];
+	imdbId: string;
+	isFavorite?: boolean;
 }
