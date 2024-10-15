@@ -42,7 +42,7 @@ export const favoritesSlice = createSlice({
 		},
 		remove: (
 			state,
-			action: PayloadAction<{ userName: UserProps | undefined; id: string }>
+			action: PayloadAction<{ userName: string | undefined; id: string }>
 		) => {
 			state.items = state.items.filter(
 				(f) =>

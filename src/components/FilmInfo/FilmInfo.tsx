@@ -7,9 +7,7 @@ import styles from './FilmInfo.module.css';
 import { FilmInfoProps } from './FilmInfo.props';
 import { AppDispatch, RootState } from '../../store/store';
 import { favoritesActions as favoritesActions } from '../../store/favorites.slice';
-import { useContext, MouseEvent } from 'react';
-import { UserContext } from '../../context/user.context';
-import { UserContextProps } from '../../context/user.context.props';
+import { MouseEvent } from 'react';
 
 function FilmInfo({
 	title,
@@ -23,14 +21,14 @@ function FilmInfo({
 	imdbId,
 }: FilmInfoProps) {
 	const dispatch = useDispatch<AppDispatch>();
-	const currentUser = useContext<UserContextProps | undefined>(UserContext);
+	const currentUser = useSelector((s: RootState) => s.users.currentUser);
 
 	const addToFavoriteFunction = async (e: MouseEvent) => {
 		e.preventDefault();
 		if (currentUser) {
 			dispatch(
 				favoritesActions.add({
-					userName: currentUser.user,
+					userName: currentUser.name,
 					title,
 					image,
 					description,
@@ -50,7 +48,7 @@ function FilmInfo({
 	const removeFromFavoriteFunction = (e: MouseEvent) => {
 		e.preventDefault();
 		if (currentUser) {
-			dispatch(favoritesActions.remove({ userName: currentUser.user, id: imdbId }));
+			dispatch(favoritesActions.remove({ userName: currentUser.name, id: imdbId }));
 		} else {
 			return;
 		}
@@ -58,7 +56,7 @@ function FilmInfo({
 
 	const favoriteFilms = useSelector((s: RootState) => s.favorites.items);
 	const currentUserFavoriteFilms = favoriteFilms.filter(
-		(film) => film.userName === currentUser?.user
+		(film) => film.userName === currentUser?.name
 	);
 	const isFavorite = currentUserFavoriteFilms.some((f) => f.imdbId === imdbId) ?? false;
 

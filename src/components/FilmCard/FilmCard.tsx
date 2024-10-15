@@ -1,20 +1,18 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { favoritesActions } from '../../store/favorites.slice';
 import FavoriteButton from '../FavoriteButton/FavoriteButton';
 import Rating from '../Rating/Rating';
 import styles from './FilmCard.module.css';
 import { FilmCardProps } from './FilmCard.props';
-import { AppDispatch } from '../../store/store';
-import { MouseEvent, useContext } from 'react';
+import { AppDispatch, RootState } from '../../store/store';
+import { MouseEvent } from 'react';
 import axios from 'axios';
 import { PREFIX } from '../../helpers/API';
 import { parseDuration } from '../../helpers/durationParser';
-import { UserContext } from '../../context/user.context';
-import { UserContextProps } from '../../context/user.context.props';
 
 function FilmCard({ id, title, poster, rating, isFavorite }: FilmCardProps) {
 	const dispatch = useDispatch<AppDispatch>();
-	const currentUser = useContext<UserContextProps | undefined>(UserContext);
+	const currentUser = useSelector((s: RootState) => s.users.currentUser);
 
 	const addToFavoriteFunction = async (e: MouseEvent) => {
 		e.preventDefault();
@@ -23,7 +21,7 @@ function FilmCard({ id, title, poster, rating, isFavorite }: FilmCardProps) {
 			if (data) {
 				dispatch(
 					favoritesActions.add({
-						userName: currentUser.user,
+						userName: currentUser.name,
 						title: title,
 						image: poster ? poster : '',
 						description: data.short.description,
@@ -46,7 +44,7 @@ function FilmCard({ id, title, poster, rating, isFavorite }: FilmCardProps) {
 	const removeFromFavoriteFunction = (e: MouseEvent) => {
 		e.preventDefault();
 		if (currentUser) {
-			dispatch(favoritesActions.remove({ userName: currentUser.user, id: id }));
+			dispatch(favoritesActions.remove({ userName: currentUser.name, id: id }));
 		} else {
 			return;
 		}

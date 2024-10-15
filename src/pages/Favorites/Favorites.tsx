@@ -4,20 +4,17 @@ import styles from '../../layout/FilmsList/FilmsList.module.css';
 import { RootState } from '../../store/store';
 import { Link } from 'react-router-dom';
 import FilmCard from '../../components/FilmCard/FilmCard';
-import { useContext } from 'react';
-import { UserContext } from '../../context/user.context';
-import { UserContextProps } from '../../context/user.context.props';
 
 function Favorites() {
 	const favoriteFilms = useSelector((s: RootState) => s.favorites.items);
-	const currentUser = useContext<UserContextProps | undefined>(UserContext);
+	const currentUser = useSelector((s: RootState) => s.users.currentUser);
 
 	return (
 		<>
 			<PageTitle text="Избранное" />
 			<div className={styles['films-list']}>
 				{favoriteFilms
-					.filter((film) => film.userName === currentUser?.user)
+					.filter((film) => film.userName === currentUser?.name)
 					.map((film) => (
 						<Link to={`/film/${film.imdbId}`} className={styles['link']}>
 							<FilmCard

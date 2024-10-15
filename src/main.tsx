@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { UserContextProvider } from './context/user.context';
 import { createBrowserRouter, defer, RouterProvider } from 'react-router-dom';
 import Error from './pages/Error/Error.js';
 import MainLayout from './layout/MainLayout/MainLayout';
@@ -20,11 +19,9 @@ const router = createBrowserRouter([
 	{
 		path: '/',
 		element: (
-			<UserContextProvider>
-				<RequireAuth>
-					<MainLayout />
-				</RequireAuth>
-			</UserContextProvider>
+			<RequireAuth>
+				<MainLayout />
+			</RequireAuth>
 		),
 		children: [
 			{
@@ -52,11 +49,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/login',
-		element: (
-			<UserContextProvider>
-				<AuthLayout />
-			</UserContextProvider>
-		),
+		element: <AuthLayout />,
 		children: [{ path: '/login', element: <Login /> }],
 	},
 	{

@@ -4,20 +4,17 @@ import { FilmsListProps } from './FilmsList.props';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { useContext } from 'react';
-import { UserContext } from '../../context/user.context';
-import { UserContextProps } from '../../context/user.context.props';
 
 function FilmsList({ items }: FilmsListProps) {
 	if (!Array.isArray(items) || items.length === 0) {
 		return <div>No films available</div>;
 	}
 
-	const currentUser = useContext<UserContextProps | undefined>(UserContext);
+	const currentUser = useSelector((s: RootState) => s.users.currentUser);
 
 	const favoriteFilms = useSelector((s: RootState) => s.favorites.items);
 	const currentUserFavoriteFilms = favoriteFilms.filter(
-		(film) => film.userName === currentUser?.user
+		(film) => film.userName === currentUser?.name
 	);
 
 	const itemsList = items.map((film) => {
