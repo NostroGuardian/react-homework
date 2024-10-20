@@ -1,5 +1,6 @@
 export interface IFilm {
 	short: Short;
+	imdbId: string;
 }
 
 export interface Short {

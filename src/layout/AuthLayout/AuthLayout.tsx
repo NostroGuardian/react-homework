@@ -5,20 +5,13 @@ import NavigationLink from '../../components/NavigationLink/NavigationLink';
 import Header from '../Header/Header';
 import { Navigate, Outlet } from 'react-router-dom';
 import styles from './AuthLayout.module.css';
-import { UserContextProps } from '../../context/user.context.props';
-import { UserContext } from '../../context/user.context';
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 function AuthLayout() {
-	const context = useContext<UserContextProps | undefined>(UserContext);
+	const currentUser = useSelector((s: RootState) => s.users.currentUser);
 
-	if (!context) {
-		throw new Error('Context unavalible!');
-	}
-
-	const { user } = context;
-
-	if (user !== undefined) {
+	if (currentUser !== undefined) {
 		return <Navigate to={'/'} replace />;
 	}
 

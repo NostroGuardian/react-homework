@@ -1,24 +1,16 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './LoginForm.module.css';
-import { UserContext } from '../../context/user.context';
-import { LoginFormProps, UserProps } from './LoginForm.props';
+import { UserProps } from '../../interfaces/userProps.interface';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { usersActions } from '../../store/user.slice';
 
-function LoginForm({ setUserLoggined }: LoginFormProps) {
+function LoginForm() {
 	const [name, setName] = useState<string>();
-	const context = useContext(UserContext);
-
-	if (!context) {
-		throw new Error('Context undefined!');
-	}
-
-	const { setUser } = context;
-
-	const getExistingData = () => {
-		const existingData = localStorage.getItem('data');
-		return existingData ? JSON.parse(existingData) : [];
-	};
+	const existingUsers = useSelector((s: RootState) => s.users.users);
+	const dispatch = useDispatch<AppDispatch>();
 
 	const formSubmit = (e: FormEvent) => {
 		e.preventDefault();
@@ -27,7 +19,6 @@ function LoginForm({ setUserLoggined }: LoginFormProps) {
 			isLoggined: true,
 		};
 
-		const existingUsers = getExistingData();
 		const userExist = existingUsers.find((user: UserProps) => user.name === name);
 
 		if (userExist) {
@@ -35,13 +26,9 @@ function LoginForm({ setUserLoggined }: LoginFormProps) {
 			const updatedUsers = existingUsers.map((user: UserProps) =>
 				user.name === name ? updatedUser : user
 			);
-			localStorage.setItem('data', JSON.stringify(updatedUsers));
-			setUser(updatedUser.name);
+			dispatch(usersActions.login(updatedUsers));
 		} else {
-			existingUsers.push(data);
-			localStorage.setItem('data', JSON.stringify(existingUsers));
-			const newUser = existingUsers.find((user: UserProps) => user.name === name);
-			setUser(newUser.name);
+			dispatch(usersActions.register(data));
 		}
 	};
 
