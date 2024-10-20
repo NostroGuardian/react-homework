@@ -1,7 +1,7 @@
-import { UserProps } from '../LoginForm/LoginForm.props';
+import { UserProps } from '../../interfaces/userProps.interface';
 
 export interface FilmInfoProps {
-	userName: UserProps | undefined;
+	userName?: string;
 	title: string;
 	image: string;
 	description: string;

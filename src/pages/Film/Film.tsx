@@ -19,7 +19,6 @@ function Film() {
 							<div className={styles['content']}>
 								<FilmHeader>{data.short.name}</FilmHeader>
 								<FilmInfo
-									userName={undefined}
 									title={data.short.name}
 									image={data.short.image}
 									description={data.short.description}

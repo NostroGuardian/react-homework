@@ -1,7 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { FAVORITE_FILMS_PERSISTANT, favoritesSlice } from './favorites.slice';
+import { favoritesSlice } from './favorites.slice';
 import { saveState } from './storage';
-import { CURRENT_USER_DATA_PERSISTANT, USERS_DATA_PERSISTANT, usersSlice } from './user.slice';
+import { usersSlice } from './user.slice';
+import {
+	CURRENT_USER_DATA_PERSISTANT,
+	FAVORITE_FILMS_PERSISTANT,
+	USERS_DATA_PERSISTANT,
+} from './storageKeys';
 
 export const store = configureStore({
 	reducer: {

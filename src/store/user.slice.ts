@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loadState } from './storage';
 import { UserProps } from '../interfaces/userProps.interface';
-
-export const USERS_DATA_PERSISTANT = 'usersData';
-export const CURRENT_USER_DATA_PERSISTANT = 'currentUserData';
+import { CURRENT_USER_DATA_PERSISTANT, USERS_DATA_PERSISTANT } from './storageKeys';
 
 export interface IUsersState {
 	users: UserProps[];

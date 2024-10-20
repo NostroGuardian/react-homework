@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FilmInfoProps } from '../components/FilmInfo/FilmInfo.props';
 import { loadState } from './storage';
-import { UserProps } from '../interfaces/userProps.interface';
-
-export const FAVORITE_FILMS_PERSISTANT = 'favoriteFilms';
+import { FAVORITE_FILMS_PERSISTANT } from './storageKeys';
 
 export interface IFavoritesState {
 	items: FilmInfoProps[];
